@@ -125,17 +125,6 @@ function Menu(opts) {
   var maxDuration = 0.4
   var minDuration = 0.15
 
-  var loopId
-  function loop(fn) {
-    loopId = (window.requestAnimationFrame || window.webkitRequestAnimationFrame)(function() {
-      loop(fn)
-      fn()
-    })
-  }
-
-  function stopLoop() {
-    window.cancelAnimationFrame(loopId)
-  }
   handle.addEventListener('touchstart', onStart)
   container.addEventListener('touchstart', function(evt) {
     if(container.classList.contains('open') || evt['page' + direction] < 15) {

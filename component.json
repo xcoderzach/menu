@@ -1,0 +1,25 @@
+{
+  "name": "menu",
+  "repo": "xcoderzach/menu",
+  "description": "",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "component/emitter": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "lib/index.js",
+  "scripts": [
+    "lib/prefix.js",
+    "lib/index.js",
+    "lib/swipe-delete.js",
+    "lib/animator.js",
+    "lib/keyframer.js",
+    "lib/velocity.js",
+    "lib/interpolators.js"
+  ],
+  "styles": [],
+  "templates": [],
+  "remotes": []
+}

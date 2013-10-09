@@ -9,17 +9,24 @@ body {
   position: absolute;
   top: 20px;
   left: 20px;
+  left: auto;
+  top: auto;
 }
 
 .grab-nav {
   position: fixed;
-  width: auto;
-  height: 200px;
-  left: 0;
-  top: 0;
+  width: 240px;
+  height: 500px;
   bottom: 0;
   right: 0;
   z-index: 1;
+  -webkit-transform: translate3d(0,0,0);
+
+  /*only for push and cover*/
+/*  z-index: 4;
+  bottom: -500px; */
+  opacity: .7;
+
   background: #333;
   position: fixed;
 }

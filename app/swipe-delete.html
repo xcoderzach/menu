@@ -12,22 +12,23 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="/styles/bootstrap.css">
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="app.css">
+    <style>
+
+      .deleted .deletedMessage {
+        opacity: 1;
+      }
+      .deletedMessage {
+        opacity: 0;
+        -webkit-transition: opacity 0.9s ease;
+      }
+
+    </style>
   </head>
-  <body>
-    <nav class="grab-nav" data-direction="left" data-mode="reveal" data-container=".grab-container" data-handle=".grab-handle">
-      <h1 style="color:white;">Words</h1>
-    </nav>
-
-    <div class="grab-container">
-      <span class="glyphicon glyphicon-list grab-handle" style="width: 3em; height: 3em; font-size: 3em;"></span>
-      <h1>'Allo, 'Allo!</h1>
+  <body style="margin: 0;">
+    <div class="item" style="position: relative; padding-top: 20px;">
+      <div class="deletedMessage">Deleted</div>
+       <img src="images/sample.jpg" style="width: 320px; position: absolute; left: 0; -webkit-transform: translate3d(0,0,0);">
     </div>
-
-    <!--[if lt IE 7]>
-      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-    <![endif]-->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
     <script>
@@ -42,13 +43,23 @@
     <script src="app.js"></script>
     <script>
       var Menu = require('menu'); 
-      var menu = new Menu('.grab-nav')
+      var menu = new Menu({
+        menu: '.item',
+        container: '.item img',
+        handle: '.item img',
+        direction: 'left',
+        mode: 'reveal'
+      })
+
+      menu.on('open', function() {
+        requestAnimationFrame(function() {
+          $('.item').addClass('deleted')
+        })
+      })
 
       $(document).on('touchmove', function(e) {
         e.preventDefault()
       })
-
-
     </script>
     <!-- endbuild -->
 </body>
