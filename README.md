@@ -13,6 +13,8 @@ var menu = new Menu({
   handle: '.handle'
 })
 
+###minDistance
+
 ###edgeActivate
   Will pulling from the edge of the screen bring in
 the menu.
@@ -54,6 +56,15 @@ an object like so:
 
 ```javascript
 { open: 1/3, closed: 0 }
+```
+
+###maxPullPast 
+  Once a user has pulled the menu past it's open or closed state, 
+percent to dampen pulling.  Value in pixels.  This can also be 
+an object like so:
+
+```javascript
+{ open: 20, closed: 0 }
 ```
 
 ###mode

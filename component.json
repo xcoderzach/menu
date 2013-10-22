@@ -13,9 +13,7 @@
   "scripts": [
     "lib/prefix.js",
     "lib/index.js",
-    "lib/swipe-delete.js",
     "lib/animator.js",
-    "lib/keyframer.js",
     "lib/velocity.js",
     "lib/interpolators.js"
   ],

@@ -23,7 +23,21 @@
 			  /* since this is a push menu, we want to pull 
 			     the menu off to the left by default */
 			  left: -240px;
+        z-index: 3;
 			  background: #333;
+      }
+
+      /* 
+        so that the container doesn't peek out 
+        when the menu overshoots 
+      */
+      nav .left-pad {
+        position: absolute;
+        background: #333;
+        left: -100px;
+        top: 0;
+        bottom: 0;
+        width: 100px;
       }
 
 			.container {
@@ -32,6 +46,7 @@
         bottom: 0;
         left: 0;
         right: 0;
+        z-index: 2;
         position: fixed;
 			  overflow-x: hidden;
         overflow-y: scroll;
@@ -47,55 +62,71 @@
 			  height: 50px;
 			  background: #ccc;
 			}
+
+      .overlay {
+        display: none;
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: black;
+      }
     </style>
   </head>
   <body>
     <nav>
-      <h1>This gets pushed in.</h1>
+      <h1>This covers the content.</h1>
+      <div class="left-pad"></div>
     </nav>
 
     <div class="container">
       <div class="handle"></div>
-      <h1>Push left nav</h1>
+      <h1>Cover nav with custom animator</h1>
+      <div class="overlay"></div>
     </div>
 
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src='//www.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
-    <!-- build:js scripts/main.js -->
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/app.js"></script>
     <script>
       var Menu = require('menu'); 
+
+      var animators = [
+      {}, 
+      {
+        els: [document.querySelector('.overlay')],
+        rules: function(position, start, end, axis, launching) {
+          var display = (position === start) ? 'none' : 'block'
+            , percent = position / end
+
+          return {
+            opacity: percent * 0.5,
+            display: display
+          }
+        }
+      }]
+   
       var menu = new Menu({
       	menu: 'nav',
       	container: '.container',
       	handle: '.handle',
       	direction: 'left',
-        mode: 'push',
-        containerSwipeClose: true,
-        menuSwipeClose: true,
-        edgeActivate: true,
+        mode: 'cover',
         menuSwipeClose: true,
         containerSwipeClose: true,
-        pullPastDampening: 0.25
+        pullPastDampening: 0.25,
+        animators: animators
       })
 
       $(document).on('touchmove', function(e) {
         e.preventDefault()
       })
 
-
     </script>
-    <!-- endbuild -->
 </body>
 </html>
