@@ -1,0 +1,132 @@
+<!doctype html>
+<!--[if lt IE 7]>    <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>     <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>     <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Push Left Example</title>
+    <meta name="description" content="">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <style>
+      body {
+        background: #333;
+      }
+      nav {
+			  position: fixed;
+			  width: 240px;
+			  top: 0;
+			  bottom: 0;
+			  /* since this is a push menu, we want to pull 
+			     the menu off to the left by default */
+			  left: -240px;
+        z-index: 3;
+			  background: #333;
+      }
+
+      /* 
+        so that the container doesn't peek out 
+        when the menu overshoots 
+      */
+      nav .left-pad {
+        position: absolute;
+        background: #333;
+        left: -100px;
+        top: 0;
+        bottom: 0;
+        width: 100px;
+      }
+
+			.container {
+			  width: 100%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 2;
+        position: fixed;
+			  overflow-x: hidden;
+        overflow-y: scroll;
+			  background-color: white;
+			  padding-right: 40px;
+			}
+
+			.handle {
+			  position: absolute;
+			  right: 40px;
+			  top: 40px;
+			  width: 50px;
+			  height: 50px;
+			  background: #ccc;
+			}
+
+      .overlay {
+        display: none;
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <h1>This covers the content.</h1>
+      <div class="left-pad"></div>
+    </nav>
+
+    <div class="container">
+      <div class="handle"></div>
+      <h1>Cover nav with custom animator</h1>
+      <div class="overlay"></div>
+    </div>
+
+    <!--[if lt IE 7]>
+      <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+
+    <script src="/bower_components/jquery/jquery.js"></script>
+    <script src="/app.js"></script>
+    <script>
+      var Menu = require('menu'); 
+
+      var animators = [
+      {}, 
+      {
+        els: [document.querySelector('.overlay')],
+        rules: function(position, start, end, axis, launching) {
+          var display = (position === start) ? 'none' : 'block'
+            , percent = position / end
+
+          return {
+            opacity: percent * 0.5,
+            display: display
+          }
+        }
+      }]
+   
+      var menu = new Menu({
+      	menu: 'nav',
+      	container: '.container',
+      	handle: '.handle',
+      	direction: 'right',
+        mode: 'push',
+        menuSwipeClose: true,
+        containerSwipeClose: true,
+        pullPastDampening: 0.25
+        //animators: animators,
+      })
+
+      $(document).on('touchmove', function(e) {
+        e.preventDefault()
+      })
+
+    </script>
+</body>
+</html>
