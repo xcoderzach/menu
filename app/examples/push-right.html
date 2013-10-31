@@ -41,7 +41,7 @@
       }
 
 			.container {
-			  width: 100%;
+			  width: 320px;
         top: 0;
         bottom: 0;
         left: 0;
@@ -51,7 +51,6 @@
 			  overflow-x: hidden;
         overflow-y: scroll;
 			  background-color: white;
-			  padding-right: 40px;
 			}
 
 			.handle {
@@ -96,19 +95,16 @@
     <script>
       var Menu = require('menu'); 
 
-      var animators = [
-      {}, 
-      {
-        els: [document.querySelector('.overlay')],
-        rules: function(position, start, end, axis, launching) {
-          var display = (position === start) ? 'none' : 'block'
-            , percent = position / end
+      Menu.interpolators
 
-          return {
-            opacity: percent * 0.5,
-            display: display
+      var animators = [{
+        interpolator: function(currentPosition, start, end, velocity) {
+          if(velocity < 0) {
+            return Menu.interpolators.overshoot(currentPosition, start, end, velocity)
+          } else {
+            return Menu.interpolators.bounce(currentPosition, start, end, velocity)
           }
-        }
+        } 
       }]
    
       var menu = new Menu({
@@ -119,8 +115,8 @@
         mode: 'push',
         menuSwipeClose: true,
         containerSwipeClose: true,
-        pullPastDampening: 0.25
-        //animators: animators,
+        pullPastDampening: 0.25,
+        animators: animators
       })
 
       $(document).on('touchmove', function(e) {
