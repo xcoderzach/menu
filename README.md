@@ -2,31 +2,39 @@
 
   Menu is a library for creating smooth touch enabled slide menus.
 
-  First check out the examples to see the types of things that Menu 
-is capable of.
+  First check out the examples to see the types of things that Menu is capable
+of.
 
 # Example
 
 var menu = new Menu({
   menu: '.menu',
   container: '.container',
-  handle: '.handle'
+  handle: '.handle',
+  mode: 'reveal'
 })
 
-###minDistance
+##methods
 
-###edgeActivate
-  Will pulling from the edge of the screen bring in
-the menu.
+###menu.open([callback])
+  opens the menu.
 
-###menuSwipeClose
+###menu.close([callback])
+  closes the menu.
+
+###menu.toggle([callback])
+  toggles the menu open or closed.
+
+##options
+
+###edgeActivate: Boolean
+  Will pulling from the edge of the screen bring the menu in.
+
+###menuSwipeClose: Boolean
   Will swiping the menu close the menu.
 
-###containerSwipeClose Boolean
+###containerSwipeClose: Boolean
   Will swiping the container close the menu.
-
-###open Boolean
-  is the menu open by default
 
 ###animator
   Pass in a custom animator, can also be an array of
@@ -44,7 +52,7 @@ activate the menu.
 
 ###minVelocity
   Minimum velocity that the menu will launch at. This will prevent
-  the menu from creeping along at 1 pixel per second.
+  the menu from creeping along at a fraction of a pixel per second.
 
 ###maxVelocity
   Maximum velocity that the menu will launch at.
@@ -79,31 +87,18 @@ an object like so:
 open - emitted when the menu is opened
 close - emitted when the menu is closed
 
-#Methods
+overshoot
+	* gravity - Gravity acceleration in pixels per second squared
+	* frequency - Frequency of the sine wave used by the overshoot launch function
+	* decay - Decay of the overshoot sine wave
 
-open([[velocity], cb])
-  programatically open the menu
-
-close([[velocity], cb])
-  programatically close the menu
-
-##Default Animator
-
-  By default the default animator will overshoot when opened and bounce when
-closed.
-
-##options
-
-overshootOptions
-	* overshootFreq - Frequency of the sine wave used by the overshoot launch function
-	* overshootDecay - Decay of the overshoot sine wave
-	* overshootCycles - How many times should the overshoot function bounce
+accelerate
+	* gravity - Gravity acceleration in pixels per second squared
 
 bounceAnimationOptions
-	* accel - Gravity acceleration in pixels per second squared
-	* dapeningFactor - Amount to dampen velocity on each bounce
+	* gravity - Gravity acceleration in pixels per second squared
+	* dapening - Amount to dampen velocity on each bounce
 	* minBounceHeight - Minimum height for a bounce
-	* bounces - Maximum number of times to bounce
 
 animationType
   This determines how the launch animation will be performed. 

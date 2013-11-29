@@ -12,24 +12,31 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <style>
+
+      *, *:before, *:after {
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
       body {
         background: #333;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
       nav {
 			  position: fixed;
 			  width: 240px;
 			  top: 0;
 			  bottom: 0;
-			  /* since this is a push menu, we want to pull 
+			  /* since this is a push menu, we want to pull
 			     the menu off to the left by default */
 			  left: -240px;
         z-index: 3;
 			  background: #333;
       }
 
-      /* 
-        so that the container doesn't peek out 
-        when the menu overshoots 
+      /*
+        so that the container doesn't peek out
+        when the menu overshoots
       */
       nav .left-pad {
         position: absolute;
@@ -41,7 +48,6 @@
       }
 
 			.container {
-			  width: 320px;
         top: 0;
         bottom: 0;
         left: 0;
@@ -53,14 +59,38 @@
 			  background-color: white;
 			}
 
+      .top-bar {
+        position: absolute;
+        top: 0px;
+        width: 100%;
+        background-color: white;
+        height: 50px;
+        text-align: center;
+        color: #444;
+        line-height: 50px;
+        border-bottom: 1px solid #ddd;
+      }
+
 			.handle {
 			  position: absolute;
-			  right: 40px;
-			  top: 40px;
+			  right: 0px;
+			  top: 0px;
+        padding-top: 16px;
 			  width: 50px;
 			  height: 50px;
-			  background: #ccc;
 			}
+
+      .handle .bar {
+        display: block;
+        width: 25px;
+        height: 2px;
+        border-radius: 1px;
+        background-color: #444;
+      }
+
+      .handle .bar+.bar {
+        margin-top: 4px;
+      }
 
       .overlay {
         display: none;
@@ -81,8 +111,15 @@
     </nav>
 
     <div class="container">
-      <div class="handle"></div>
-      <h1>Cover nav with custom animator</h1>
+      <div class="top-bar">
+        Cover
+        <div class="handle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
+      </div>
+      <h1></h1>
       <div class="overlay"></div>
     </div>
 
@@ -93,18 +130,8 @@
     <script src="/bower_components/jquery/jquery.js"></script>
     <script src="/app.js"></script>
     <script>
-      var Menu = require('menu'); 
+      var Menu = require('menu');
 
-      var animators = [{
-        interpolator: function(currentPosition, start, end, velocity) {
-          if(velocity < 0) {
-            return Menu.interpolators.overshoot(currentPosition, start, end, velocity)
-          } else {
-            return Menu.interpolators.bounce(currentPosition, start, end, velocity)
-          }
-        } 
-      }]
-   
       var menu = new Menu({
       	menu: 'nav',
       	container: '.container',
@@ -113,8 +140,7 @@
         mode: 'push',
         menuSwipeClose: true,
         containerSwipeClose: true,
-        pullPastDampening: 0.25,
-        animators: animators
+        pullPastDampening: 0.25
       })
 
       $(document).on('touchmove', function(e) {
