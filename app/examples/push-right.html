@@ -140,7 +140,10 @@
         mode: 'push',
         menuSwipeClose: true,
         containerSwipeClose: true,
-        pullPastDampening: 0.25
+        pullPastDampening: {
+          open: 0.25,
+          close: 0
+        }
       })
 
       $(document).on('touchmove', function(e) {

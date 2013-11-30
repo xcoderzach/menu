@@ -6,37 +6,6 @@ body {
   margin: 0;
 }
 
-.grab-handle {
-  position: absolute;
-  left: auto;
-  top: auto;
-}
-
-.grab-nav {
-  position: fixed;
-  width: 240px;
-  height: 500px;
-  bottom: 0;
-  right: 0;
-  z-index: 1;
-  -webkit-transform: translate3d(0,0,0);
-
-  /*only for push and cover*/
-/*  z-index: 4;
-  bottom: -500px; */
-  opacity: .7;
-
-  background: #333;
-  position: fixed;
-}
-
-.grab-container {
-  width: 360px;
-  height: 568px;
-  position: absolute;
-  left: 0;
-  overflow-x: hidden;
-  background-color: white;
-  padding-right: 40px;
-  z-index: 2;
+h1 {
+  color: #C44D58;
 }
