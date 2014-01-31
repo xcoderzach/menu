@@ -1,8 +1,8 @@
 module.exports = Velocity
 
 function Velocity() {
-	this.positionQueue = []
-	this.timeQueue = []
+  this.positionQueue = []
+  this.timeQueue = []
 }
 
 Velocity.prototype.pruneQueue = function() {
@@ -29,14 +29,13 @@ Velocity.prototype.pruneQueue = function() {
   }
 }
 
-Velocity.prototype.pushPosition = function(position) {
+Velocity.prototype.updatePosition = function(position) {
   this.positionQueue.push(position)
   this.timeQueue.push(Date.now())
   this.pruneQueue()
 }
 
 Velocity.prototype.getVelocity = function() {
-
   var length = this.timeQueue.length
   if(length === 1) return 0
 
