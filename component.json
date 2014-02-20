@@ -15,7 +15,7 @@
     "lib/prefix.js",
     "lib/index.js",
     "lib/animator.js",
-    "lib/velocity.js",
+    "lib/raf-loop.js",
     "lib/interpolators.js"
   ],
   "styles": [],

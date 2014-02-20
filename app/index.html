@@ -6,66 +6,134 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title></title>
+    <title>Push Left Example</title>
     <meta name="description" content="">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="stylesheet" href="/styles/main.css">
-    <link rel="stylesheet" href="app.css">
+    <style>
+      body {
+        background: #333;
+        margin: 0;
+        -webkit-perspective: 800px; 
+        -webkit-perspective-origin-x: 0px; 
+        -webkit-perspective-origin-y: 50%;
+      }
+
+      nav {
+			  position: fixed;
+			  width: 240px;
+			  top: 0;
+			  bottom: 0;
+			  /* since this is a push menu, we want to pull 
+			     the menu off to the left by default */
+			  left: -240px;
+        z-index: 3;
+			  background: #333;
+      }
+
+      /* 
+        so that the container doesn't peek out 
+        when the menu overshoots 
+      */
+      nav .left-pad {
+        position: absolute;
+        background: #333;
+        left: -100px;
+        top: 0;
+        bottom: 0;
+        width: 100px;
+      }
+
+			.container {
+			  width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        height: 100vh;
+        position: absolute;
+			  overflow-x: hidden;
+        overflow-y: scroll;
+			  background-color: white;
+			  padding-right: 40px;
+        -webkit-transform-origin: 0px 50%;
+			}
+
+			.handle {
+			  position: absolute;
+			  left: 40px;
+			  top: 40px;
+			  width: 50px;
+			  height: 50px;
+			  background: #ccc;
+			}
+
+      .overlay {
+        -webkit-transform: translateZ(0);
+        display: none;
+        opacity: 0;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: black;
+      }
+    </style>
   </head>
   <body>
+    <nav>
+      <h1>This covers the content.</h1>
+      <div class="left-pad"></div>
+    </nav>
+
     <div class="container">
-      <nav>
-        <a href="#omgwat">Home</a>
-        <a href="#omgwat">Getting Started</a>
-        <a href="#omgwat">API Docs</a>
-        <a href="#omgwat">Examples</a>
-        <a href="#omgwat">Github</a>
-      </nav>
+      <div class="handle"></div>
+      <h1>Cover nav with custom animator</h1>
+      <div class="overlay"></div>
     </div>
 
-    <h1>Pull Menu</h1>
-    <h2>Elegant menus with native feel</h2>
-    <div class="description">
-      A library for creating off screen pull menus on the web.  Aims to be flexible
-      enough to implement most styles of menu.
-    </div>
-
-    <ul class="examples">
-      <li>push</li>
-      <li>reveal</li>
-      <li>cover</li>
-      <li>top</li>
-      <li>bottom</li>
-      <li>custom animator 1</li>
-      <li>custom animator 2</li>
-    </ul>
     <!--[if lt IE 7]>
       <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
     <![endif]-->
 
-    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-    <script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src='//www.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
-
-    <!-- build:js scripts/main.js -->
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="app.js"></script>
+    <script src="/bower_components/jquery/jquery.js"></script>
+    <script src="/app.js"></script>
     <script>
       var Menu = require('menu'); 
-      var menu = new Menu('.grab-nav')
+
+      var animators = [
+      {}, 
+      {
+        els: [document.querySelector('.overlay')],
+        rules: function(position, start, end, axis, launching) {
+          var display = (position === start) ? 'none' : 'block'
+            , percent = position / end
+
+          return {
+            opacity: percent * 0.5,
+            display: display
+          }
+        }
+      }]
+   
+      var menu = new Menu({
+      	menu: 'nav',
+      	container: '.container',
+      	handle: '.handle',
+      	direction: 'left',
+        mode: 'push',
+        mouseEvents: true,
+        menuSwipeClose: true,
+        containerSwipeClose: true,
+        pullPastDampening: 0.25,
+        animators: animators
+      })
 
       $(document).on('touchmove', function(e) {
         e.preventDefault()
       })
 
-
     </script>
-    <!-- endbuild -->
 </body>
-</html>
+</html> 
